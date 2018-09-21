@@ -2,14 +2,18 @@
 
 public class PfupfController : BeingController
 {       
-    private void Awake()
+    private override void Awake()
     {
-        blinkEyeTime = getNextBlinkEyeTime();
+    	base.Awake();
+     	maxNumberOfBlankets = 10;
     }
 
-    private void Update()
+    private override void Update()
     {
-        Blink();
+     	base.Update();
+        if (numberOfBlankets == maxNumberOfBlankets) {
+        	gameWon();
+        }
     }
 }
 

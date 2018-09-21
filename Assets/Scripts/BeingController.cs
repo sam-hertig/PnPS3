@@ -5,11 +5,27 @@ using UnityEngine;
 public class BeingController : MonoBehaviour {
 
     public GameObject[] eyeballs;
+    [HideInInspector] public int maxNumberOfBlankets;
+    [HideInInspector] public int numberOfBlankets;
 
-    public float blinkEyeTime;
-    public bool blinking = false;
+    private float blinkEyeTime;
+    private bool blinking = false;
 
-    public void Blink()
+
+    public virtual void Awake()
+    {
+        blinkEyeTime = getNextBlinkEyeTime();
+        numberOfBlankets = 0;
+    }
+
+
+    public virtual void Update()
+    {
+        Blink();
+    }
+
+
+    private void Blink()
     {
         if (Time.time > blinkEyeTime)
         {
@@ -30,8 +46,21 @@ public class BeingController : MonoBehaviour {
         }
     }
 
-    public float getNextBlinkEyeTime()
+
+    private float getNextBlinkEyeTime()
     {
         return Time.time + Random.Range(2f, 8f);
     }
+
+
+    void OnTriggerEnter(Collider other) 
+    {
+        if (other.gameObject.CompareTag ( "Blanket") && numberOfBlankets < maxNumberOfBlankets)
+        {
+            other.Transform.setParent(transform);
+            numberOfBlankets++;
+        }
+    }
+
+
 }
