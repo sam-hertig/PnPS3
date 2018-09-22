@@ -1,18 +1,28 @@
 ﻿using UnityEngine;
 
 public class PfupfController : BeingController
-{       
-    private override void Awake()
+{
+    protected override void Awake()
     {
-    	base.Awake();
-     	maxNumberOfBlankets = 10;
+        base.Awake();
+        maxNumberOfBlankets = 10;
     }
 
-    private override void Update()
+    protected override void Update()
     {
-     	base.Update();
+        base.Update();
         if (numberOfBlankets == maxNumberOfBlankets) {
-        	gameWon();
+            //gameWon();
+            print("Well done!");
+        }
+    }
+
+    protected override void OnTriggerEnter(Collider other)
+    {
+        base.OnTriggerEnter(other);
+        if (other.gameObject.CompareTag("Blanket") && numberOfBlankets < maxNumberOfBlankets && partner!=null)
+        {
+            //partner.numberOfBlankets--;
         }
     }
 }

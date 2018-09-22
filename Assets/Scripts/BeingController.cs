@@ -1,10 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BeingController : MonoBehaviour {
 
     public GameObject[] eyeballs;
+    public GameObject partner;
+
     [HideInInspector] public int maxNumberOfBlankets;
     [HideInInspector] public int numberOfBlankets;
 
@@ -12,14 +12,14 @@ public class BeingController : MonoBehaviour {
     private bool blinking = false;
 
 
-    public virtual void Awake()
+    protected virtual void Awake()
     {
         blinkEyeTime = getNextBlinkEyeTime();
         numberOfBlankets = 0;
     }
 
 
-    public virtual void Update()
+    protected virtual void Update()
     {
         Blink();
     }
@@ -53,14 +53,15 @@ public class BeingController : MonoBehaviour {
     }
 
 
-    void OnTriggerEnter(Collider other) 
+    protected virtual void OnTriggerEnter(Collider other) 
     {
-        if (other.gameObject.CompareTag ( "Blanket") && numberOfBlankets < maxNumberOfBlankets)
+        print("collision");
+        if (other.gameObject.CompareTag ("Blanket") && numberOfBlankets < maxNumberOfBlankets)
         {
-            other.Transform.setParent(transform);
+            print("blanket-transfer");
+            other.gameObject.transform.SetParent(transform);
+            other.gameObject.transform.localPosition = new Vector3(0, 0, 0);
             numberOfBlankets++;
         }
     }
-
-
 }

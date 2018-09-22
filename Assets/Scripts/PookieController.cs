@@ -11,20 +11,23 @@ public class PookieController : BeingController
     private float m_MovementInputValue = 0f;    
     private float m_TurnInputValue = 0f;
 
-    private override void Awake()
+
+    protected override void Awake()
     {
         base.Awake();
         m_Rigidbody = GetComponent<Rigidbody>();
         maxNumberOfBlankets = 1;
     }
 
-    private override void Update()
+
+    protected override void Update()
     {
         base.Update();
         m_MovementInputValue = Input.GetAxis ("Vertical");
         m_TurnInputValue = Input.GetAxis ("Horizontal");
         WiggleFeet();
     }
+
 
     private void FixedUpdate ()
     {
@@ -42,8 +45,9 @@ public class PookieController : BeingController
         // Apply this movement to the rigidbody's position.
         m_Rigidbody.MovePosition(m_Rigidbody.position + movement);
 
-        if (transform.???? < -20) {
-            gameOver();
+        if (transform.position.y < -20) {
+            //gameOver();
+            print("Game over!");
         }
     }
 
@@ -59,6 +63,7 @@ public class PookieController : BeingController
         // Apply this rotation to the rigidbody's rotation.
         m_Rigidbody.MoveRotation (m_Rigidbody.rotation * turnRotation);
     }
+
 
     private void WiggleFeet ()
     {
