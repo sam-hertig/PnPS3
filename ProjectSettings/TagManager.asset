@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Blanket
+  - BlanketInPlace
   layers:
   - Default
   - TransparentFX

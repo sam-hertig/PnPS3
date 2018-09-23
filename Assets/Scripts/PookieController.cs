@@ -12,15 +12,14 @@ public class PookieController : BeingController
     private float m_TurnInputValue = 0f;
 
 
-    protected override void Awake()
+    protected override void Awake ()
     {
         base.Awake();
         m_Rigidbody = GetComponent<Rigidbody>();
-        maxNumberOfBlankets = 1;
     }
 
 
-    protected override void Update()
+    protected override void Update ()
     {
         base.Update();
         m_MovementInputValue = Input.GetAxis ("Vertical");
@@ -31,7 +30,6 @@ public class PookieController : BeingController
 
     private void FixedUpdate ()
     {
-        // Adjust the rigidbodies position and orientation in FixedUpdate.
         Move ();
         Turn ();
     }
@@ -39,28 +37,18 @@ public class PookieController : BeingController
 
     private void Move ()
     {
-        // Create a vector in the direction the tank is facing with a magnitude based on the input, speed and the time between frames.
         Vector3 movement = transform.forward * m_MovementInputValue * m_Speed * Time.deltaTime;
-
-        // Apply this movement to the rigidbody's position.
         m_Rigidbody.MovePosition(m_Rigidbody.position + movement);
-
-        if (transform.position.y < -20) {
-            //gameOver();
-            print("Game over!");
+        if (transform.position.y < -10) {
+            gameManager.gameOver();
         }
     }
 
 
     private void Turn ()
     {
-        // Determine the number of degrees to be turned based on the input, speed and time between frames.
         float turn = m_TurnInputValue * m_TurnSpeed * Time.deltaTime;
-
-        // Make this into a rotation in the y axis.
         Quaternion turnRotation = Quaternion.Euler (0f, turn, 0f);
-
-        // Apply this rotation to the rigidbody's rotation.
         m_Rigidbody.MoveRotation (m_Rigidbody.rotation * turnRotation);
     }
 

@@ -3,29 +3,31 @@
 public class BeingController : MonoBehaviour {
 
     public GameObject[] eyeballs;
-    public GameObject partner;
+    public BeingController partnerController;
+    public GameManager gameManager;
 
-    [HideInInspector] public int maxNumberOfBlankets;
-    [HideInInspector] public int numberOfBlankets;
+    public int numberOfBlankets;
+    public int maxNumberOfBlankets; //[HideInInspector] 
+    
 
     private float blinkEyeTime;
     private bool blinking = false;
 
 
-    protected virtual void Awake()
+    protected virtual void Awake ()
     {
         blinkEyeTime = getNextBlinkEyeTime();
         numberOfBlankets = 0;
     }
 
 
-    protected virtual void Update()
+    protected virtual void Update ()
     {
         Blink();
     }
 
 
-    private void Blink()
+    private void Blink ()
     {
         if (Time.time > blinkEyeTime)
         {
@@ -47,18 +49,16 @@ public class BeingController : MonoBehaviour {
     }
 
 
-    private float getNextBlinkEyeTime()
+    private float getNextBlinkEyeTime ()
     {
         return Time.time + Random.Range(2f, 8f);
     }
 
 
-    protected virtual void OnTriggerEnter(Collider other) 
+    protected virtual void OnTriggerEnter (Collider other) 
     {
-        print("collision");
         if (other.gameObject.CompareTag ("Blanket") && numberOfBlankets < maxNumberOfBlankets)
         {
-            print("blanket-transfer");
             other.gameObject.transform.SetParent(transform);
             other.gameObject.transform.localPosition = new Vector3(0, 0, 0);
             numberOfBlankets++;
