@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657838, g: 0.49641234, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -517,6 +517,7 @@ GameObject:
   - component: {fileID: 320040941}
   - component: {fileID: 320040942}
   - component: {fileID: 320040943}
+  - component: {fileID: 320040944}
   m_Layer: 0
   m_Name: Pfupf
   m_TagString: Untagged
@@ -558,6 +559,14 @@ MonoBehaviour:
   gameManager: {fileID: 909702698}
   numberOfBlankets: 0
   maxNumberOfBlankets: 3
+  repellingAudioClips:
+  - {fileID: 8300000, guid: 0c9892aea9884ba4cb06a18fee17158b, type: 3}
+  - {fileID: 8300000, guid: e94502cce7cff594db066bf23afb44de, type: 3}
+  - {fileID: 8300000, guid: 03082cb428c4b284b9baa8ad95db5a18, type: 3}
+  complainingAudioClips:
+  - {fileID: 8300000, guid: 2be8107c2cfd013449adf67fdc749922, type: 3}
+  - {fileID: 8300000, guid: e4ef5f26bc229e74088e45303a1b539c, type: 3}
+  - {fileID: 8300000, guid: 47b64662fadfb0840807789a8a6cebea, type: 3}
 --- !u!65 &320040943
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -570,6 +579,101 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.7985425, y: 1, z: 3.1458125}
   m_Center: {x: 0.17157674, y: 0, z: 0.28085876}
+--- !u!82 &320040944
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 320040940}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &342921615
 GameObject:
   m_ObjectHideFlags: 0
@@ -1570,7 +1674,7 @@ GameObject:
   - component: {fileID: 909702699}
   - component: {fileID: 909702698}
   m_Layer: 0
-  m_Name: GameManagerHoder
+  m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
