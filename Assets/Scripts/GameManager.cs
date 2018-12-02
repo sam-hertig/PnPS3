@@ -3,13 +3,13 @@ using UnityEngine;
 public class GameManager : MonoBehaviour {
 
       
-	public void gameOver ()
+	public void GameOver()
 	{
 		print("Game over!");
 	}
 
 
-	public void gameWon ()
+	public void GameWon()
 	{
 		print("You win!");
 	}

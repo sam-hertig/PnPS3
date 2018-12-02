@@ -2,66 +2,65 @@
 
 public class BeingController : MonoBehaviour {
 
-    public GameObject[] eyeballs;
-    public BeingController partnerController;
-    public GameManager gameManager;
+    public GameObject[] Eyeballs;
+    public BeingController PartnerController;
+    public GameManager GameManager;
+    public int NumberOfBlankets;
+    public int MaxNumberOfBlankets;
+    public AudioController AudioController;
 
-    public int numberOfBlankets;
-    public int maxNumberOfBlankets; //[HideInInspector] 
-    
-
-    private float blinkEyeTime;
-    private bool blinking = false;
+    private float _blinkEyeTime;
+    private bool _blinking = false;
 
 
-    protected virtual void Awake ()
+    protected virtual void Awake()
     {
-        blinkEyeTime = getNextBlinkEyeTime();
-        numberOfBlankets = 0;
+        _blinkEyeTime = GetNextBlinkEyeTime();
+        NumberOfBlankets = 0;
     }
 
 
-    protected virtual void Update ()
+    protected virtual void Update()
     {
         Blink();
     }
 
 
-    private void Blink ()
+    private void Blink()
     {
-        if (Time.time > blinkEyeTime)
+        if (Time.time > _blinkEyeTime)
         {
-            blinkEyeTime = getNextBlinkEyeTime();
-            blinking = true;
+            _blinkEyeTime = GetNextBlinkEyeTime();
+            _blinking = true;
         }
-        if (blinking)
+        if (_blinking)
         {
             float currentAngle = Mathf.PingPong(500 * Time.time, 180f) + 90f;
-            foreach (GameObject eyeball in eyeballs)
+            foreach (GameObject eyeball in Eyeballs)
             {
                 eyeball.transform.localEulerAngles = new Vector3(currentAngle, 0f, 0f);
             }
             if (currentAngle - 90f < 10)
             {
-                blinking = false;
+                _blinking = false;
             }
         }
     }
 
 
-    private float getNextBlinkEyeTime ()
+    private float GetNextBlinkEyeTime()
     {
         return Time.time + Random.Range(2f, 8f);
     }
 
 
-    protected virtual void OnTriggerEnter (Collider other) 
+    protected virtual void OnTriggerEnter(Collider other) 
     {
-        if (other.gameObject.CompareTag ("Blanket") && numberOfBlankets < maxNumberOfBlankets)
+        if (other.gameObject.CompareTag ("Blanket") && NumberOfBlankets < MaxNumberOfBlankets)
         {
             other.gameObject.transform.SetParent(transform);
             other.gameObject.transform.localPosition = new Vector3(0, 0, 0);
-            numberOfBlankets++;
+            NumberOfBlankets++;
         }
     }
 }

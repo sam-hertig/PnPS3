@@ -2,45 +2,44 @@
 
 public class CameraControl : MonoBehaviour
 {
-    public float m_DampTime = 0.2f;                 // Approximate time for the camera to refocus.
-    public float m_ScreenEdgeBuffer = 4f;           // Space between the top/bottom most target and the screen edge.
-    public float m_MinSize = 6.5f;                  // The smallest orthographic size the camera can be.
-    public Transform[] m_Targets;                   // All the targets the camera needs to encompass.
+    public float DampTime = 0.2f;                 // Approximate time for the camera to refocus.
+    public float ScreenEdgeBuffer = 4f;           // Space between the top/bottom most target and the screen edge.
+    public float MinSize = 6.5f;                  // The smallest orthographic size the camera can be.
+    public Transform[] Targets;                   // All the targets the camera needs to encompass.
+
+    private Camera _camera;                        // Used for referencing the camera.
+    private float _zoomSpeed;                      // Reference speed for the smooth damping of the orthographic size.
+    private Vector3 _moveVelocity;                 // Reference velocity for the smooth damping of the position.
+    private Vector3 _desiredPosition;              // The position the camera is moving towards.
 
 
-    private Camera m_Camera;                        // Used for referencing the camera.
-    private float m_ZoomSpeed;                      // Reference speed for the smooth damping of the orthographic size.
-    private Vector3 m_MoveVelocity;                 // Reference velocity for the smooth damping of the position.
-    private Vector3 m_DesiredPosition;              // The position the camera is moving towards.
-
-
-    private void Awake ()
+    private void Awake()
     {
-        m_Camera = GetComponentInChildren<Camera> ();
+        _camera = GetComponentInChildren<Camera> ();
     }
 
 
-    private void FixedUpdate ()
+    private void FixedUpdate()
     {
         Move ();
         Zoom ();
     }
 
 
-    private void Move ()
+    private void Move()
     {
         FindAveragePosition ();
-        transform.position = Vector3.SmoothDamp(transform.position, m_DesiredPosition, ref m_MoveVelocity, m_DampTime);
+        transform.position = Vector3.SmoothDamp(transform.position, _desiredPosition, ref _moveVelocity, DampTime);
     }
 
 
-    private void FindAveragePosition ()
+    private void FindAveragePosition()
     {
         Vector3 averagePos = new Vector3 ();
         int numTargets = 0;
-        for (int i = 0; i < m_Targets.Length; i++)
+        for (int i = 0; i < Targets.Length; i++)
         {
-            averagePos += m_Targets[i].position;
+            averagePos += Targets[i].position;
             numTargets++;
         }
         if (numTargets > 0) 
@@ -48,38 +47,38 @@ public class CameraControl : MonoBehaviour
             averagePos /= numTargets;
         }
         averagePos.y = transform.position.y;
-        m_DesiredPosition = averagePos;
+        _desiredPosition = averagePos;
     }
 
 
-    private void Zoom ()
+    private void Zoom()
     {
         float requiredSize = FindRequiredSize();
-        m_Camera.orthographicSize = Mathf.SmoothDamp (m_Camera.orthographicSize, requiredSize, ref m_ZoomSpeed, m_DampTime);
+        _camera.orthographicSize = Mathf.SmoothDamp (_camera.orthographicSize, requiredSize, ref _zoomSpeed, DampTime);
     }
 
 
-    private float FindRequiredSize ()
+    private float FindRequiredSize()
     {
-        Vector3 desiredLocalPos = transform.InverseTransformPoint(m_DesiredPosition);
+        Vector3 desiredLocalPos = transform.InverseTransformPoint(_desiredPosition);
         float size = 0f;
-        for (int i = 0; i < m_Targets.Length; i++)
+        for (int i = 0; i < Targets.Length; i++)
         {
-            Vector3 targetLocalPos = transform.InverseTransformPoint(m_Targets[i].position);
+            Vector3 targetLocalPos = transform.InverseTransformPoint(Targets[i].position);
             Vector3 desiredPosToTarget = targetLocalPos - desiredLocalPos;
             size = Mathf.Max(size, Mathf.Abs(desiredPosToTarget.y));
-            size = Mathf.Max(size, Mathf.Abs(desiredPosToTarget.x) / m_Camera.aspect);
+            size = Mathf.Max(size, Mathf.Abs(desiredPosToTarget.x) / _camera.aspect);
         }
-        size += m_ScreenEdgeBuffer;
-        size = Mathf.Max (size, m_MinSize);
+        size += ScreenEdgeBuffer;
+        size = Mathf.Max (size, MinSize);
         return size;
     }
 
 
-    public void SetStartPositionAndSize ()
+    public void SetStartPositionAndSize()
     {
         FindAveragePosition ();
-        transform.position = m_DesiredPosition;
-        m_Camera.orthographicSize = FindRequiredSize ();
+        transform.position = _desiredPosition;
+        _camera.orthographicSize = FindRequiredSize ();
     }
 }
