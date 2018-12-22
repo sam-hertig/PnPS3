@@ -59,7 +59,7 @@ public class BeingController : MonoBehaviour {
         if (other.gameObject.CompareTag ("Blanket") && NumberOfBlankets < MaxNumberOfBlankets)
         {
             other.gameObject.transform.SetParent(transform);
-            other.gameObject.transform.localPosition = new Vector3(0, 0, 0);
+            other.gameObject.transform.localPosition = new Vector3(0, 0.55f, 0);
             NumberOfBlankets++;
         }
     }
