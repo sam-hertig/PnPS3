@@ -7,12 +7,10 @@ public class BeingController : MonoBehaviour {
     public GameManager GameManager;
     public int NumberOfBlankets;
     public AudioController AudioController;
-
-    protected int MaxNumberOfBlankets;
+    public int MaxNumberOfBlankets;
 
     private float _blinkEyeTime;
     private bool _blinking = false;
-
 
     protected virtual void Start()
     {
@@ -20,14 +18,7 @@ public class BeingController : MonoBehaviour {
         NumberOfBlankets = 0;
     }
 
-
-    protected virtual void Update()
-    {
-        Blink();
-    }
-
-
-    private void Blink()
+    protected void Blink()
     {
         if (Time.time > _blinkEyeTime)
         {
@@ -48,19 +39,17 @@ public class BeingController : MonoBehaviour {
         }
     }
 
-
     private float GetNextBlinkEyeTime()
     {
         return Time.time + Random.Range(2f, 8f);
     }
-
 
     protected virtual void OnTriggerEnter(Collider other) 
     {
         if (other.gameObject.CompareTag ("Blanket") && NumberOfBlankets < MaxNumberOfBlankets)
         {
             other.gameObject.transform.SetParent(transform);
-            other.gameObject.transform.localPosition = new Vector3(0, 0.55f, 0);
+            other.gameObject.transform.localPosition = new Vector3(0, 0.55f + 0.08f * NumberOfBlankets, 0);
             NumberOfBlankets++;
         }
     }

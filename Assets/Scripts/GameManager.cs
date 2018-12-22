@@ -1,10 +1,17 @@
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class GameManager : MonoBehaviour {
 
     public Material[] BlanketMaterials;
     public int NumberOfBlankets = 5;
     public GameObject BlanketPrefab;
+    public Text GameStartText;
+    public Text GameWonText;
+    public Text GameLostText;
+    public Image TextBackground;
 
     private float _blanketMinPosition = 5;
     private float _blanketMaxPosition = 20;
@@ -22,17 +29,43 @@ public class GameManager : MonoBehaviour {
             SkinnedMeshRenderer blanketRenderer = blanket.GetComponent<SkinnedMeshRenderer>();
             blanketRenderer.material = BlanketMaterials[i % BlanketMaterials.Length];
         }
+        ShowStartText();
     }
 
     public void GameOver()
 	{
-		print("Game over!");
-	}
+        GameLostText.gameObject.SetActive(true);
+        TextBackground.gameObject.SetActive(true);
+        AwaitRestartGame();
+    }
 
-
-	public void GameWon()
+    public void GameWon()
 	{
-		print("You win!");
-	}
+        GameWonText.gameObject.SetActive(true);
+        TextBackground.gameObject.SetActive(true);
+        AwaitRestartGame();
+    }
 
+    private void AwaitRestartGame()
+    {
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            Scene scene = SceneManager.GetActiveScene();
+            SceneManager.LoadScene(scene.name);
+        }
+    }
+
+    private void ShowStartText()
+    {
+        GameStartText.gameObject.SetActive(true);
+        TextBackground.gameObject.SetActive(true);
+        StartCoroutine(HideStartText());
+    }
+
+    private IEnumerator HideStartText()
+    {
+        yield return new WaitForSeconds(6);
+        GameStartText.gameObject.SetActive(false);
+        TextBackground.gameObject.SetActive(false);
+    }
 }

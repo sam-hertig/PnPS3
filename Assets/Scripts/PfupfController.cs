@@ -2,18 +2,20 @@
 
 public class PfupfController : BeingController
 {
+    private GameManager gameManager;
+
     protected override void Start()
     {
         base.Start();
-        GameManager gameManager = FindObjectOfType<GameManager>();
+        gameManager = FindObjectOfType<GameManager>();
         MaxNumberOfBlankets = gameManager.NumberOfBlankets;
     }
 
-    protected override void Update()
+    private void Update()
     {
-        base.Update();
+        Blink();
         if (NumberOfBlankets == MaxNumberOfBlankets) {
-            GameManager.GameWon();
+            gameManager.GameWon();
         }
     }
 

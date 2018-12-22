@@ -11,7 +11,6 @@ public class PookieController : BeingController
     private float _movementInputValue = 0f;    
     private float _turnInputValue = 0f;
 
-
     protected override void Start()
     {
         base.Start();
@@ -19,10 +18,9 @@ public class PookieController : BeingController
         MaxNumberOfBlankets = 1;
     }
 
-
-    protected override void Update()
+    private void Update()
     {
-        base.Update();
+        Blink();
         _movementInputValue = Input.GetAxis ("Vertical");
         _turnInputValue = Input.GetAxis ("Horizontal");
         WiggleFeet();
@@ -31,8 +29,8 @@ public class PookieController : BeingController
 
     private void FixedUpdate()
     {
-        Move ();
-        Turn ();
+        Move();
+        Turn();
     }
 
 
@@ -45,14 +43,12 @@ public class PookieController : BeingController
         }
     }
 
-
     private void Turn()
     {
         float turn = _turnInputValue * TurnSpeed * Time.deltaTime;
         Quaternion turnRotation = Quaternion.Euler (0f, turn, 0f);
         _rigidbody.MoveRotation (_rigidbody.rotation * turnRotation);
     }
-
 
     private void WiggleFeet()
     {
@@ -67,7 +63,6 @@ public class PookieController : BeingController
             }
         }
     }
-
 
     protected override void OnTriggerEnter(Collider other)
     {
