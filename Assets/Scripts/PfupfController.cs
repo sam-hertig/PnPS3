@@ -2,10 +2,11 @@
 
 public class PfupfController : BeingController
 {
-    protected override void Awake()
+    protected override void Start()
     {
-        base.Awake();
-        MaxNumberOfBlankets = GameObject.FindGameObjectsWithTag("Blanket").Length;
+        base.Start();
+        GameManager gameManager = FindObjectOfType<GameManager>();
+        MaxNumberOfBlankets = gameManager.NumberOfBlankets;
     }
 
     protected override void Update()
@@ -16,11 +17,10 @@ public class PfupfController : BeingController
         }
     }
 
-
     protected override void OnTriggerEnter(Collider other)
     {
         base.OnTriggerEnter(other);
-        if (other.gameObject.CompareTag("Blanket") && NumberOfBlankets < MaxNumberOfBlankets && PartnerController!=null)
+        if (other.gameObject.CompareTag("Blanket") && NumberOfBlankets < MaxNumberOfBlankets && PartnerController != null)
         {
             AudioController.PlayAudio(true);
             other.gameObject.tag = "BlanketInPlace";

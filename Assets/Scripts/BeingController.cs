@@ -6,14 +6,15 @@ public class BeingController : MonoBehaviour {
     public BeingController PartnerController;
     public GameManager GameManager;
     public int NumberOfBlankets;
-    public int MaxNumberOfBlankets;
     public AudioController AudioController;
+
+    protected int MaxNumberOfBlankets;
 
     private float _blinkEyeTime;
     private bool _blinking = false;
 
 
-    protected virtual void Awake()
+    protected virtual void Start()
     {
         _blinkEyeTime = GetNextBlinkEyeTime();
         NumberOfBlankets = 0;

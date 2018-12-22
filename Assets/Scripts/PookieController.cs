@@ -12,9 +12,9 @@ public class PookieController : BeingController
     private float _turnInputValue = 0f;
 
 
-    protected override void Awake()
+    protected override void Start()
     {
-        base.Awake();
+        base.Start();
         _rigidbody = GetComponent<Rigidbody>();
         MaxNumberOfBlankets = 1;
     }
