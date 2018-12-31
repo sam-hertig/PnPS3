@@ -2192,7 +2192,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "You loose! \n\nPookie fell to his death.\n\nHit enter to play again."
+  m_Text: "You lose! \n\nPookie fell to his death.\n\nHit enter to play again."
 --- !u!222 &1303444312
 CanvasRenderer:
   m_ObjectHideFlags: 0
